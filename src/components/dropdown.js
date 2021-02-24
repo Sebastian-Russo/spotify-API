@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './dropdown.css';
 
 
-export const Dropdown = ({options}) => {
-  const [selectedValue, setSelectedValue] = useState('');
-
+export const Dropdown = ({options, selectedValue, changed}) => {
   
+  console.log(options)
   const option = options.map((item, i) => {
     return (
-      <option key={i} value={item.name}>{item.name}</option>
+      <option key={i} value={item.id}>{item.name}</option>
     )
   })
 
@@ -16,7 +15,7 @@ export const Dropdown = ({options}) => {
     <div>
       <select 
           value={selectedValue} 
-          onChange={(e) => setSelectedValue(e.target.value)}
+          onChange={(e) => changed(e.target.value)}
       >
         {option}
       </select>
