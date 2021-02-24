@@ -2,17 +2,16 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
 import { Dropdown } from './dropdown'
+import { TrackList } from './tracklist';
 
-const data = [
-  {name: 'a'}, {name:'b'}, {name:'c'}
-]
 
 const App = () => {
   const [token, setToken] = useState('');
   const [genres, setGenres] = useState({selectredGenre: '', listOfGenresFromAPI: []});
   const [playlist, setPlaylist] = useState({selectedPlaylist: '', listOfPlaylistFromAPI: []})
-  console.log(playlist)
+  const [trackList, setTrackList] = useState([]);
 
+  console.log(trackList)
 
   useEffect(() => {
     // First API Call: for auth token, "Client Credentials Flow"
@@ -28,7 +27,6 @@ const App = () => {
     };
     axios(config)
       .then(tokenResponse => {
-        console.log('TOKEN',tokenResponse)
         setToken(tokenResponse.data.access_token)
 
         // Second API Call, request to genre 
@@ -44,7 +42,6 @@ const App = () => {
         
         axios(config)
         .then(genreResponse => {
-          console.log(genreResponse)
           setGenres({
             selectredGenre: genres.selectredGenre,
             listOfGenresFromAPI: genreResponse.data.categories.items
@@ -85,17 +82,39 @@ const App = () => {
   // Select playlist in second search bar 
   const playlistChanged = val => {
     setPlaylist({
-      selectedValue: val,
+      selectedPlaylist: val,
       listOfPlaylistFromAPI: playlist.listOfPlaylistFromAPI
     })
   }
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('clicked', playlist.selectedPlaylist)
+
+    // Fourth API Call, gets songs/tracks from selected/submitted playlist 
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ' + token
+      },
+      method: 'GET',
+      url: `https://api.spotify.com/v1/playlists/${playlist.selectedPlaylist}/tracks?market=US`
+    }
+    axios(config)
+      .then((res) => {
+        setTrackList(res.data.items)
+      })
+
+  }
+
   return (
-    <form onSubmit={() => {}}>
+    <form onSubmit={handleSubmit}>
       <div className="dropdown-container">
         <Dropdown options={genres.listOfGenresFromAPI} selectedValue={genres.selectedValue} changed={genreChanged} />
         <Dropdown options={playlist.listOfPlaylistFromAPI} selectedValue={playlist.selectedValue} changed={playlistChanged} />
-        <button type="submit">Search</button>
+        <button type="submit" disabled={playlist.selectedPlaylist === ''}>Search</button>
+        <TrackList trackList={trackList} />
       </div>
     </form>
   )
