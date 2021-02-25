@@ -3,6 +3,7 @@ import axios from 'axios';
 import './App.css';
 import { Dropdown } from './dropdown'
 import { TrackList } from './tracklist';
+import { SingleTrack } from './single-track';
 
 
 const App = () => {
@@ -10,8 +11,8 @@ const App = () => {
   const [genres, setGenres] = useState({selectredGenre: '', listOfGenresFromAPI: []});
   const [playlist, setPlaylist] = useState({selectedPlaylist: '', listOfPlaylistFromAPI: []})
   const [trackList, setTrackList] = useState([]);
+  const [singleTrack, setSingleTrack] = useState('');
 
-  console.log(trackList)
 
   useEffect(() => {
     // First API Call: for auth token, "Client Credentials Flow"
@@ -71,7 +72,6 @@ const App = () => {
     }
     axios(config)
     .then(playlistResponse => {
-      console.log(playlistResponse)
       setPlaylist({
         selectedPlaylist: playlist.selectedPlaylist,
         listOfPlaylistFromAPI: playlistResponse.data.playlists.items
@@ -89,8 +89,6 @@ const App = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('clicked', playlist.selectedPlaylist)
-
     // Fourth API Call, gets songs/tracks from selected/submitted playlist 
     const config = {
       headers: {
@@ -105,16 +103,25 @@ const App = () => {
       .then((res) => {
         setTrackList(res.data.items)
       })
+  }
 
+  const handleSingleTrack = (e,t) => {
+    e.preventDefault();
+    console.log('click', t)
+    setSingleTrack(t)
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="dropdown-container">
-        <Dropdown options={genres.listOfGenresFromAPI} selectedValue={genres.selectedValue} changed={genreChanged} />
+    <form onSubmit={handleSubmit} className="App">
+      <h1>Spotify Playlist API</h1>
+      <div className="dropdown-wrapper">
+        <Dropdown options={genres.listOfGenresFromAPI} selectedValue={genres.selectedValue} changed={genreChanged} type="genre"/>
         <Dropdown options={playlist.listOfPlaylistFromAPI} selectedValue={playlist.selectedValue} changed={playlistChanged} />
         <button type="submit" disabled={playlist.selectedPlaylist === ''}>Search</button>
-        <TrackList trackList={trackList} />
+      </div>
+      <div className="row">
+        <TrackList trackList={trackList} handleSingleTrack={handleSingleTrack}/>
+        <SingleTrack singleTrack={singleTrack} />
       </div>
     </form>
   )
@@ -122,24 +129,3 @@ const App = () => {
 
 export default App;
 
-/*
-Use the Spotify api to create an application that lets you discover music. 
-It will help you find top songs, trending artists, and explore new genres. 
-If you want to get really advanced, how about a music suggestion feature?
-
-******** app mock up *********** 
-
-search bar - genre lists data 
-
-search bar - playlist data
-
-submit button 
-
-clickable list of tracks  
-
-detail section for track: 
--album pic
--song title
--artist
-
-*/

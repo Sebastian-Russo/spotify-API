@@ -1,0 +1,16 @@
+.track-wrapper {
+  height: 250px;
+  width: 250px;
+  border: 1px solid black;
+  color: wheat;
+}
+
+.track-wrapper > div {
+  background-color: black;
+  outline: 1px solid black;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+}

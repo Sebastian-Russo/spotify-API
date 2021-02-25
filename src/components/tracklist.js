@@ -1,19 +1,19 @@
 import './tracklist.css';
 
-export const TrackList = ({trackList}) => {
+export const TrackList = ({trackList, handleSingleTrack}) => {
+
+  if (trackList.length === 0) return <div>tracks</div>
 
   const tracks = trackList.map((t,i) => {
-    console.log(t)
     return (
-      <div key={i}>
-        <div>{t.track_number}</div>
+      <div key={i} className="track" onClick={(e) => handleSingleTrack(e,t)}>
+        <div>{i+1}</div>
         <div>{t.track.name}</div>
-        {/* <div>{t.track}</div> */}
       </div>
     )
   })
 
   return (
-    <div>{tracks}</div>
+    <div className="tracklist-wrapper">{tracks}</div>
   )
 }
