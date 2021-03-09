@@ -14,3 +14,10 @@
 .row > select {
   margin-left: 14px;
 }
+
+@media only screen and (max-width: 700px) {
+  .dropdown-wrapper {
+    width: 150px;
+    margin: 2px;
+  }
+}

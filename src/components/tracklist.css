@@ -3,13 +3,13 @@
   flex-direction: column;
   border: 2px solid black;
   height: 70vh;
+  width: auto;
   background: rgb(0, 55, 7);
   background: linear-gradient(
     74deg,
     rgba(0, 55, 7, 1) 7%,
     rgba(227, 255, 28, 1) 29%
   );
-  width: 70vh;
   margin: 10px;
   padding: 2px;
   outline: 1px solid black;
