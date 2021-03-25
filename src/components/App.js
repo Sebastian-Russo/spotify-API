@@ -3,7 +3,6 @@ import axios from 'axios';
 import './App.css';
 import { Dropdown } from './dropdown'
 import { TrackList } from './tracklist';
-import { SingleTrack } from './single-track';
 
 
 const App = () => {
@@ -120,8 +119,7 @@ const App = () => {
         <button type="submit" disabled={playlist.selectedPlaylist === ''}>Search</button>
       </div>
       <div className="row">
-        <TrackList trackList={trackList} handleSingleTrack={handleSingleTrack}/>
-        <SingleTrack singleTrack={singleTrack} />
+        <TrackList trackList={trackList} handleSingleTrack={handleSingleTrack} singleTrack={singleTrack}/>
       </div>
     </form>
   )

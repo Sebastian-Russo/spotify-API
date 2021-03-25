@@ -1,15 +1,17 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
 .tracklist-wrapper {
   display: flex;
   flex-direction: column;
   border: 2px solid black;
   height: 70vh;
   width: auto;
-  background: rgb(0, 55, 7);
-  background: linear-gradient(
-    74deg,
-    rgba(0, 55, 7, 1) 7%,
-    rgba(227, 255, 28, 1) 29%
-  );
+  background-color: #44318d;
   margin: 10px;
   padding: 2px;
   outline: 1px solid black;
@@ -29,5 +31,5 @@
 }
 
 .track:hover {
-  background-color: lime;
+  background-color: #d82f87;
 }

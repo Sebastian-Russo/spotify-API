@@ -4,13 +4,7 @@
   align-items: center;
   height: 150vh;
   flex-direction: column;
-  background: rgb(0, 55, 7);
-  background: linear-gradient(
-    74deg,
-    rgba(0, 55, 7, 1) 7%,
-    rgba(28, 255, 47, 1) 20%,
-    rgba(28, 255, 47, 1) 29%
-  );
+  background-color: #2a1b3d;
 }
 
 .dropdown-wrapper {

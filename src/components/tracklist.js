@@ -1,6 +1,7 @@
+import { SingleTrack } from './single-track';
 import './tracklist.css';
 
-export const TrackList = ({trackList, handleSingleTrack}) => {
+export const TrackList = ({trackList, handleSingleTrack, singleTrack}) => {
 
   if (trackList.length === 0) return <div>tracks</div>
 
@@ -14,6 +15,9 @@ export const TrackList = ({trackList, handleSingleTrack}) => {
   })
 
   return (
-    <div className="tracklist-wrapper">{tracks}</div>
+    <div className="container">
+      <SingleTrack singleTrack={singleTrack} />
+      <div className="tracklist-wrapper">{tracks}</div>
+    </div>
   )
 }
